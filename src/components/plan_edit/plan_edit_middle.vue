@@ -3,9 +3,9 @@ import { ref, onMounted, inject } from 'vue';
 import axios from 'axios';
 
 const server_url = localStorage.getItem('server_url');
-const plan_id = ref(14); //5 14
 
 const CurrentPlan = inject('CurrentPlan');
+const plan_id = inject('plan_id')
 
 const fetchWorkoutsInPlan = async (plan_id) => {
     console.log('fetch');
@@ -45,4 +45,5 @@ onMounted(() => {
     </div>
 </template>
 
-<style></style>
+<style>
+</style>

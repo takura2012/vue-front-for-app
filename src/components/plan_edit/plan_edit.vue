@@ -6,7 +6,10 @@ import PlanEditModalAdd from './plan_edit_modal_add.vue';
 import { ref, provide } from 'vue';
 
 const CurrentPlan = ref(null);
+const plan_id = ref(14); //5 14
+
 provide('CurrentPlan', CurrentPlan);
+provide('plan_id', plan_id);
 
 </script>
 

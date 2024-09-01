@@ -46,6 +46,15 @@
     color: var(--color-red);
 }
 
+
+.shadowed-text {
+    text-shadow: 
+    0 0 2px #000,  
+    0 0 2px #000,
+    0 0  #000,
+    0 0 2px #000; /* Черный бордер вокруг текста */
+}
+
 .main-frame {
     margin: 0px;
     padding: 0px;
