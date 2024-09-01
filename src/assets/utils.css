@@ -1,0 +1,98 @@
+@import url('variables.css');
+
+.centred-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text-14 {
+    font-size: 14px;
+}
+
+.text-24 {
+    font-size: 24px;
+}
+
+.text-28 {
+    font-size: 28px;
+}
+
+.text-36 {
+    font-size: 36px;
+}
+
+.text-48 {
+    font-size: 48px;
+}
+
+.utc-orange {
+    color: var(--color-orange);
+}
+
+.utc-white {
+    color: var(--color-w);
+}
+
+.utc-green {
+    color: var(--color-green);
+}
+
+.utc-light-gray {
+    color: var(--color-light-gray);
+}
+
+.utc-red {
+    color: var(--color-red);
+}
+
+.main-frame {
+    margin: 0px;
+    padding: 0px;
+    height: 100vh;
+    background-color: var(--color-0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--color-light-gray);
+}
+
+.utils-block-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+
+}
+
+.button-modal-confirm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-0);
+    height: 40px;
+    width: 200px;
+    background-color: var(--color-orange);
+    border-radius: 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.invisible {
+    display: none;
+}
+
+.link-nodecoration {
+    text-decoration: none;
+}
+
+.p-main {
+    /* border: 1px solid yellow; */
+    position: relative;
+    height: 100vh;
+    min-width: 350px;
+    max-width: 350px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

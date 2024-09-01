@@ -1,0 +1,338 @@
+
+.vp-top-name {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid var(--color-orange);
+    border-radius: 20px;
+    width: 100%;
+    max-height: 150px;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.vp-name {
+    width: 100%;
+    height: 95%;
+    margin-top: 3%;
+    color: var(--color-w);
+    font-size: 24px;
+    padding: 5px;
+}
+
+.vp-count {
+    color: var(--color-light-gray);
+    font-size: 14px;
+}
+
+/* --------------------------------------------------MIDDLE ------------------------------------------------ */
+
+.vp-wks {
+    width: 350px;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.vp-wks::-webkit-scrollbar {
+    display: none;
+}
+
+.vp-wk {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+
+    border-radius: 20px;
+    margin-top: 10px;
+    width: 100%;
+    height: 110px;
+    overflow: hidden;
+    background-color: var(--color-bg-gray);
+    border: 1px, solid, var(--color-borders);
+}
+
+.vp-wk-texts {
+    display: flex;
+    align-items: left;
+    justify-content: space-between;
+    flex-direction: column;
+    min-width: 70%;
+    width: 70%;
+    height: 100%;
+}
+
+.vp-wk-name {
+    margin: 10px;
+}
+
+.vp-wk-info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.vp-wk-count {
+    margin-left: 20px;
+    margin-bottom: 10px;
+    color: var(--color-orange)
+}
+
+.vp-wk-type {
+    margin-bottom: 10px;
+    color: var(--color-light-gray)
+}
+
+.vp-wk-img {
+    
+    height: 100%;
+    z-index: 3;
+
+}
+
+.img-gradient {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 25%;
+}
+
+.img-gradient::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(30, 27, 27, 1), rgba(255, 255, 255, 0));
+    z-index: 4;
+}
+
+.vp-wk-img-src {
+    height: 100%;
+    width: auto;
+    position: relative; /* Помещаем изображение в .vp-wk-img */
+
+}
+
+/* --------------------------------------------------BOTTOM ------------------------------------------------ */
+
+.vp-bottom {
+    margin-top: auto;
+    width: 100%;
+    max-height: 120px;
+    min-height: 120px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.vp-bottom-item {
+    margin: 30px;
+}
+
+.vp-wk-link {
+    display: flex; /* Располагает дочерние элементы в строку */
+    align-items: center; /* Выравнивание по вертикали по центру */
+    text-decoration: none; /* Убирает подчеркивание у ссылки */
+    width: 100%; /* Если требуется, чтобы ссылка занимала всю ширину контейнера */
+    height: 100%;
+    color: var(--color-light-gray);
+}
+
+/* --------------------------------------------------MODAL RENAME ------------------------------------------------ */
+
+.vp-rename-modal {
+    display: none;
+    /* display: flex; */
+    flex-direction: column;
+    align-items: center;
+    justify-content:space-evenly;
+
+    border: 1px solid var(--color-borders);
+    border-radius: 20px;
+    position: absolute;
+    top: 25%;
+    left: 2%;
+    height: 50%;
+    width: 96%;
+    background-color: var(--color-bg-gray);
+    z-index: 10;
+}
+
+.vp-modal-input {
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    font-size: 24px;
+    width: 300px;
+    height: 50px;
+    background-color: var(--color-light-gray);
+}
+
+.vp-modal-blocker {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--color-light-gray);
+    opacity: .5;
+    z-index: 9;
+}
+
+#fud:checked ~ .vp-rename-modal,
+#fud:checked ~ .vp-modal-blocker {
+    display: flex;
+}
+
+#fud {
+    display: none;
+}
+
+/* --------------------------------------------------MODAL ADD ------------------------------------------------ */
+
+.add-modal-blocker {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-blocker);
+    z-index: 9;
+}
+
+.modal-add-workouts {
+    display: none;
+    /* display: flex; */
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    border-radius: 20px;
+    top: 4%;
+    left: 4%;
+    width: 92%;
+    height: 92%;
+    background-color: var(--color-0);
+    z-index: 10;
+}
+
+/* -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --- --modal-top -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --  */
+
+.modal-add-workouts-top {
+    display: flex;
+    width: 100%;
+    height: 100px;
+    display: flex;
+}
+
+.modal-add-workouts-top-close {
+    display: flex;
+    /* border: 1px solid red; */
+    margin-left: auto;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+   
+}
+
+.modal-add-workouts-top-close label {
+    cursor: pointer;
+}
+
+.modal-add-workouts-top-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid red; */
+    width: 80%;
+}
+
+
+/* -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --- --modal-middle -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --  */
+
+.modal-add-workouts-middle {
+    width: 96%;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.vp-wks::-webkit-scrollbar {
+    display: none;
+}
+
+.modal-add-workouts-item {
+    position: relative;
+    border-radius: 20px;
+    margin-top: 10px;
+    width: 100%;
+    height: 110px;
+    overflow: hidden;
+    background-color: var(--color-bg-gray);
+    border: 1px, solid, var(--color-borders);
+}
+
+.modal-add-workouts-item label {
+    cursor: pointer;
+}
+
+.modal-add-texts {
+    position: relative;
+    margin: 10px;
+    z-index: 5;
+}
+
+.modal-add-workouts-img-group {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+.modal-add-workouts-img-gradient {
+    height: 100%;
+    width: 100%;
+}
+
+.modal-add-workouts-img-gradient::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 60%;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(to right, rgb(34, 34, 34), rgba(255, 255, 255, 0));
+    z-index: 4;
+}
+
+.modal-add-workouts-img-src {
+    position: absolute;
+    top: 0;
+    left: 60%;
+    height: 100%;
+}
+
+/* -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --- --modal-bottom -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --  */
+
+.modal-add-workouts-bottom {
+    margin-top: auto;
+    width: 100%;
+    height: 70px;
+}
+
+#modal-add-check:checked ~ .add-modal-blocker {
+    display: flex;
+}
+
+#modal-add-check:checked ~ .modal-add-workouts {
+    display: flex;
+}
