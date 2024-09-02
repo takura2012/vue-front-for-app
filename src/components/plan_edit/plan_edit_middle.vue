@@ -1,11 +1,20 @@
 <script setup>
-import { ref, onMounted, inject } from 'vue';
+import { ref, onMounted, inject, defineProps } from 'vue';
 import axios from 'axios';
 
 const server_url = localStorage.getItem('server_url');
 
+const props = defineProps({
+  plan_id: {
+    type: String,
+    required: true
+  }
+});
+console.log('PLAN-EDIT-MIDDLE=', props.plan_id);
+const plan_id = ref(props.plan_id);
+
 const CurrentPlan = inject('CurrentPlan');
-const plan_id = inject('plan_id')
+// const plan_id = inject('plan_id')
 
 const fetchWorkoutsInPlan = async (plan_id) => {
     console.log('fetch');
@@ -26,7 +35,7 @@ onMounted(() => {
             <div v-for="workout, index in CurrentPlan.workouts" key="index"  class="vp-wk">
                 <a href="#" class="vp-wk-link">
                     <div class="vp-wk-texts">
-                        <div class="vp-wk-name text-24">{{ workout.workout_name }}</div>
+                        <div class="vp-wk-name text-18">{{ workout.workout_name }}</div>
                         <div class="vp-wk-info">
                             <div class="vp-wk-count">Exercises: {{ workout.exercises_count }}</div>
                             <div class="vp-wk-type">Duration: ~{{ workout.workout_duration }}min.</div>

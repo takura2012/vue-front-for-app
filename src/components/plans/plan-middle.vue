@@ -1,7 +1,8 @@
 
 <script setup>
-import { ref, onMounted, inject, watch, reactive, computed } from 'vue';
+import { ref, onMounted, inject, watch, reactive, computed, defineProps } from 'vue';
 import axios from 'axios';
+
 
 const checked = inject('checked');
 const server_url = localStorage.getItem('server_url')
@@ -54,7 +55,7 @@ const displayedPlans = computed(() => {
 <template>
     <div class="p-content">
         <div v-for="plan, i in displayedPlans" :key="plan.plan_id" class="plan-item">
-            <a :href="'#'+plan.plan_id" class="link-nodecoration">
+            <router-link :to="{name: 'PlanEdit', params: {plan_id: plan.plan_id}}" class="link-nodecoration">
                 <div class="p-img">
                     <div class="p-texts">
                         <div class="p-name text-24 utc-orange">{{ plan.plan_local_name }}</div>
@@ -69,7 +70,7 @@ const displayedPlans = computed(() => {
                     @error="onImgError"
                     />
                 </div>
-            </a>
+            </router-link>
         </div>
     </div>
 

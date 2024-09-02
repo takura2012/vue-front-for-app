@@ -1,9 +1,16 @@
 <script setup>
 
-import { inject, computed } from 'vue';
+import { inject, computed, defineProps} from 'vue';
 
 const CurrentPlan = inject('CurrentPlan');
-const plan_id = inject('plan_id')
+
+const props = defineProps({
+  plan_id: {
+    type: String,
+    required: true
+  }
+});
+console.log('PLAN-EDIT-TOP=', props.plan_id)
 
 const server_url = localStorage.getItem('server_url')
 
@@ -15,7 +22,9 @@ const backgroundStyle = computed(() => {
   if (!CurrentPlan) {
     return {};
   }
+  console.log(`url(${server_url}/get_img/${CurrentPlan.value.plan_owner_id}-${CurrentPlan.value.plan_img})`);
   return {
+
     backgroundImage: `url(${server_url}/get_img/${CurrentPlan.value.plan_owner_id}-${CurrentPlan.value.plan_img})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',

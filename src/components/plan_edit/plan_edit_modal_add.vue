@@ -1,6 +1,7 @@
 <script setup></script>
 
 <template>
+    <div>
     <input type="checkbox" id="modal-add-check" class="invisible">
         <div class="add-modal-blocker"></div>
         <div class="modal-add-workouts">
@@ -36,6 +37,7 @@
             </div>
             <div class="modal-add-workouts-bottom"></div>
         </div>
+    </div>
 </template>
 
 <style></style>

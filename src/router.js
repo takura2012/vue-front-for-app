@@ -12,7 +12,7 @@ const routes = [
     {path: '/start', component: Start, meta: { requiresAuth: true }},
     {path: '/login', component: Login, alias: '/'},
     {path: '/plans', component: Plans, meta: { requiresAuth: true }},
-    {path: '/plan_edit', component: PlanEdit},
+    {path: '/plan_edit/:plan_id',name: 'PlanEdit', component: PlanEdit, props: true},
     {path: '/test', component: Test}
 ];
 
