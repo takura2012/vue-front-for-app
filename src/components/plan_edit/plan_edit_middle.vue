@@ -10,17 +10,41 @@ const props = defineProps({
     required: true
   }
 });
-console.log('PLAN-EDIT-MIDDLE=', props.plan_id);
+// console.log('PLAN-EDIT-MIDDLE=', props.plan_id);
 const plan_id = ref(props.plan_id);
 
 const CurrentPlan = inject('CurrentPlan');
-// const plan_id = inject('plan_id')
+
+const selectedBlock = ref(null);
+
+const selectBlock = (index) => {
+  selectedBlock.value = index;
+};
+
+const UpClick = (index) => {
+    if (index == 0) { return }
+    let temp_workout = {};
+    temp_workout = CurrentPlan.value.workouts[index-1];
+    CurrentPlan.value.workouts[index-1] = CurrentPlan.value.workouts[index];
+    CurrentPlan.value.workouts[index] = temp_workout;
+    selectBlock(index-1);
+}
+
+const DownClick = (index) => {
+    console.log('CurrentPlan.value.workouts.length=', CurrentPlan.value.workouts.length, ' index=', index)
+    if (index == CurrentPlan.value.workouts.length-1) { return }
+    let temp_workout = {};
+    temp_workout = CurrentPlan.value.workouts[index+1];
+    CurrentPlan.value.workouts[index+1] = CurrentPlan.value.workouts[index];
+    CurrentPlan.value.workouts[index] = temp_workout;
+    selectBlock(index+1);
+}
 
 const fetchWorkoutsInPlan = async (plan_id) => {
-    console.log('fetch');
+    // console.log('fetch');
     const response = await axios.get(server_url+`/get_plan/${plan_id.value}`);
     CurrentPlan.value = response.data;
-    console.log('Data:', CurrentPlan.value);
+    // console.log('Data:', CurrentPlan.value);
 };
 
 onMounted(() => {
@@ -32,7 +56,25 @@ onMounted(() => {
 <template>
     <div v-if="CurrentPlan && CurrentPlan.plan_name" class="vp-wks">
             
-            <div v-for="workout, index in CurrentPlan.workouts" key="index"  class="vp-wk">
+            <div v-for="workout, index in CurrentPlan.workouts" 
+                        :key="index"
+                        class="vp-wk"
+                        :class="{ active: selectedBlock === index }"
+                        @click="selectBlock(index)"
+                        @touchstart="selectBlock(index)"
+                        >
+                <div class="vp-wk-leftbar">
+                    <div class="vp-wk-leftbar-up" @click.stop="UpClick(index)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
+                        </svg>
+                    </div>
+                    <div class="vp-wk-leftbar-down" @click.stop="DownClick(index)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/>
+                        </svg>
+                    </div>
+                </div>
                 <a href="#" class="vp-wk-link">
                     <div class="vp-wk-texts">
                         <div class="vp-wk-name text-18">{{ workout.workout_name }}</div>
@@ -55,4 +97,7 @@ onMounted(() => {
 </template>
 
 <style>
+
+
+
 </style>

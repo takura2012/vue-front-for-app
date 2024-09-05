@@ -164,6 +164,7 @@
 }
 
 .p-new-modal {
+    
     display: none;
     /* display: flex; */
     flex-direction: column;
@@ -179,6 +180,7 @@
     width: 96%;
     background-color: var(--color-bg-gray);
     z-index: 10;
+
 }
 
 .p-new-modal p {
@@ -199,7 +201,7 @@
 
 .button-modal-close {
     position: absolute;
-    top:10;
+    top: 10px;
     left: 90%;
 }
 

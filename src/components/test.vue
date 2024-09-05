@@ -1,37 +1,42 @@
-<script setup>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-
-const server_url = localStorage.getItem('server_url')
-const img_url = ref('')
-const img_api_url = ref(server_url+'/get_img_url/')
-const img_name = ref('plan1.png')
-const fetchImg = async () => {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    console.log('Not authorized (no token)');
-    return}
-  try {
-  const response = await axios.get(img_api_url.value + img_name.value, {headers: {
-            'Authorization': `Bearer ${token}`
-        }});
-        console.log(response.data.id)
-        img_url.value = response.data.id
-      } catch (err) {
-        console.log(err)
-      }
-
-        // id.value = response;
-}
-onMounted(()=> {
-  fetchImg();
-});
-
-</script>
-
 <template>
-    <div>
-      {{ img_url }}
-    </div>
-  </template>
-  
+  <div>
+    <input type="file" accept="image/*" @change="handleFileUpload" />
+    <button @click="submitFile">Загрузить файл</button>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+
+const file = ref(null);
+
+const handleFileUpload = (event) => {
+  file.value = event.target.files[0];
+};
+
+const submitFile = async () => {
+  if (!file.value) {
+    alert('Пожалуйста, выберите файл!');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('file', file.value);
+
+  try {
+    const response = await fetch('/upload', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (response.ok) {
+      alert('Файл успешно загружен');
+    } else {
+      alert('Ошибка при загрузке файла');
+    }
+  } catch (error) {
+    console.error('Ошибка:', error);
+    alert('Произошла ошибка при загрузке файла');
+  }
+};
+</script>
