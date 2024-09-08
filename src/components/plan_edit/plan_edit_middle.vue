@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, inject, defineProps } from 'vue';
+import { ref, onMounted, inject, defineProps, computed } from 'vue';
 import axios from 'axios';
 
 const server_url = localStorage.getItem('server_url');
@@ -17,9 +17,22 @@ const CurrentPlan = inject('CurrentPlan');
 
 const selectedBlock = ref(null);
 
+const isMobile = computed(() => {
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+});
+
 const selectBlock = (index) => {
+
+    // console.log("before", selectedBlock.value);
+    if (selectedBlock.value == index) {
+        // console.log("after", selectedBlock.value);
+        selectedBlock.value = null;
+        return
+    }
+
   selectedBlock.value = index;
 };
+
 
 const UpClick = (index) => {
     if (index == 0) { return }
@@ -31,13 +44,18 @@ const UpClick = (index) => {
 }
 
 const DownClick = (index) => {
-    console.log('CurrentPlan.value.workouts.length=', CurrentPlan.value.workouts.length, ' index=', index)
+    // console.log('CurrentPlan.value.workouts.length=', CurrentPlan.value.workouts.length, ' index=', index)
     if (index == CurrentPlan.value.workouts.length-1) { return }
     let temp_workout = {};
     temp_workout = CurrentPlan.value.workouts[index+1];
     CurrentPlan.value.workouts[index+1] = CurrentPlan.value.workouts[index];
     CurrentPlan.value.workouts[index] = temp_workout;
     selectBlock(index+1);
+}
+
+const DelClick = (index) => {
+    selectedBlock.value = null;
+    console.log('delclick');
 }
 
 const fetchWorkoutsInPlan = async (plan_id) => {
@@ -61,7 +79,6 @@ onMounted(() => {
                         class="vp-wk"
                         :class="{ active: selectedBlock === index }"
                         @click="selectBlock(index)"
-                        @touchstart="selectBlock(index)"
                         >
                 <div class="vp-wk-leftbar">
                     <div class="vp-wk-leftbar-up" @click.stop="UpClick(index)">
@@ -75,6 +92,14 @@ onMounted(() => {
                         </svg>
                     </div>
                 </div>
+                <div class="vp-wk-rightbar-del" @click.stop="DelClick(index)">
+                    <div class="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-lg utc-red" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                        </svg>
+                    </div>
+                </div>
+
                 <a href="#" class="vp-wk-link">
                     <div class="vp-wk-texts">
                         <div class="vp-wk-name text-18">{{ workout.workout_name }}</div>

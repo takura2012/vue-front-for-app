@@ -10,7 +10,7 @@ const props = defineProps({
     required: true
   }
 });
-console.log('PLAN-EDIT-TOP=', props.plan_id)
+// console.log('PLAN-EDIT-TOP=', props.plan_id)
 
 const server_url = localStorage.getItem('server_url')
 
@@ -22,7 +22,7 @@ const backgroundStyle = computed(() => {
   if (!CurrentPlan) {
     return {};
   }
-  console.log(`url(${server_url}/get_img/${CurrentPlan.value.plan_owner_id}-${CurrentPlan.value.plan_img})`);
+  // console.log(`url(${server_url}/get_img/${CurrentPlan.value.plan_owner_id}-${CurrentPlan.value.plan_img})`);
   return {
 
     backgroundImage: `url(${server_url}/get_img/${CurrentPlan.value.plan_owner_id}-${CurrentPlan.value.plan_img})`,

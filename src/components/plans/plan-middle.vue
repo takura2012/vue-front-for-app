@@ -30,7 +30,7 @@ const fetchPlans = async () => {
             'Authorization': `Bearer ${token}`
         }});
         plans.value = response.data;
-        console.log(plans.value)
+        // console.log(plans.value)
         userPlans.value = plans.value.filter(plan => plan.plan_owner != 'admin');
         adminPlans.value = plans.value.filter(plan => plan.plan_owner === 'admin');
     } catch (err) {

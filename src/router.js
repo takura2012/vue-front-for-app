@@ -12,7 +12,7 @@ const routes = [
     {path: '/start', component: Start, meta: { requiresAuth: true }},
     {path: '/login', component: Login, alias: '/'},
     {path: '/plans', component: Plans, meta: { requiresAuth: true }},
-    {path: '/plan_edit/:plan_id',name: 'PlanEdit', component: PlanEdit, props: true},
+    {path: '/plan_edit/:plan_id',name: 'PlanEdit', component: PlanEdit, props: true, meta: { requiresAuth: true }},
     {path: '/test', component: Test}
 ];
 
@@ -26,8 +26,8 @@ const server_url = localStorage.getItem('server_url')
 router.beforeEach(async (to, from, next) => {
     if (to.meta.requiresAuth) {
       const token = localStorage.getItem('token'); // Получаем токен из localStorage
-      console.log('Authorization');
-      console.log(token);
+      // console.log('Authorization');
+      // console.log(token);
       if (!token) {
         // console.log('Токен отсутствует');
         next('/login'); // Если токена нет, перенаправляем на страницу логина
