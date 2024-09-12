@@ -53,9 +53,37 @@ const DownClick = (index) => {
     selectBlock(index+1);
 }
 
-const DelClick = (index) => {
+const DelClick = async (index, PT_id) => {
     selectedBlock.value = null;
-    console.log('delclick');
+    // console.log('delclick, PT_id=', PT_id);
+    const token = localStorage.getItem('token');
+    let status = 'before post'
+    try {
+            let response = await axios.post(server_url+'/plan_del_wk', new URLSearchParams({
+                        PT_id
+                    }),{
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Authorization': `Bearer ${token}`
+                        }
+                    }
+                );
+            status = response.data.status;
+
+            response = await axios.get(server_url+'/get_plan/'+CurrentPlan.value.plan_id);
+            if (response.data.status != 'fail') {
+                CurrentPlan.value = response.data;
+                // console.log(CurrentPlan);
+            } else {
+                console.log(response.data.status);
+            }
+
+            } catch {
+                status = 'catch error'
+                console.log('Error post to server plan_del_wk')
+            };
+    console.log('Status:', status);
+    
 }
 
 const fetchWorkoutsInPlan = async (plan_id) => {
@@ -92,7 +120,7 @@ onMounted(() => {
                         </svg>
                     </div>
                 </div>
-                <div class="vp-wk-rightbar-del" @click.stop="DelClick(index)">
+                <div class="vp-wk-rightbar-del" @click.stop="DelClick(index, workout.PT_id)">
                     <div class="round">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-lg utc-red" viewBox="0 0 16 16">
                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>

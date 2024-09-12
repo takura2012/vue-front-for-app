@@ -1,11 +1,16 @@
 <script setup>
 import { inject, ref, watchEffect } from 'vue';
+import axios from 'axios';
 
 const UserWorkouts = inject('UserWorkouts');
 const CommonWorkouts = inject('CommonWorkouts');
+const CurrentPlan = inject('CurrentPlan');
+
 const modal_selected = ref('filled');
 const DisplayedWorkouts = ref([]);
 const modal_header = ref('');
+const server_url = localStorage.getItem('server_url');
+
 const heart_click = () => {
     if (modal_selected.value === 'empty') {
         modal_selected.value = 'filled';
@@ -25,6 +30,31 @@ watchEffect(() => {
     modal_header.value = "Добавить тренировку (общие)";
   }
 });
+
+const plan_add = async (plan_id, workout_id) => {
+
+            const token = localStorage.getItem('token') ;
+            let response = await axios.post(server_url+'/plan_add', new URLSearchParams({
+                    plan_id,
+                    workout_id
+                }),{
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                response = await axios.get(server_url+'/get_plan/'+plan_id);
+                if (response.data.status != 'fail') {
+                    CurrentPlan.value = response.data;
+                    // console.log(CurrentPlan);
+                } else {
+                    console.log(response.data.status);
+                }
+
+
+            }
+
 
 </script>
 
@@ -62,7 +92,7 @@ watchEffect(() => {
 
             <div class="modal-add-workouts-middle">
                 
-                <div v-for="workout, index in DisplayedWorkouts" class="modal-add-workouts-item">
+                <div v-for="workout, index in DisplayedWorkouts" class="modal-add-workouts-item" @click="plan_add(CurrentPlan.plan_id, workout.id)">
                     <label for="modal-add-check">
                         <div class="modal-add-texts">
                             <div class="modal-add-texts-name text-18 utc-orange">{{ workout.name }}</div>

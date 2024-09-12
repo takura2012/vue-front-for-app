@@ -32,7 +32,7 @@ const fetchAllWorkouts = async () => {
   let workouts = response.data;
   UserWorkouts.value = workouts.filter(wk => wk.owner != 'admin');
   CommonWorkouts.value = workouts.filter(wk => wk.owner === 'admin');
-  // console.log('Common WORKOUTS DATA:', CommonWorkouts.value);
+  
 }
 
 onMounted(() => {
