@@ -40,7 +40,7 @@ router.beforeEach(async (to, from, next) => {
               Authorization: `Bearer ${token}`
             }
           });
-          console.log('response: ', response.status)
+          // console.log('response: ', response.status)
           if (response.status === 200) {
             // console.log('RESPONSE 200');
             next(); // Если токен действителен, разрешаем переход

@@ -14,8 +14,9 @@ const plan_default_img = '/src/img/plan_default_img.png';
 const userPlans = ref([]);
 const adminPlans = ref([]);
 
-const imageSrc = (img) => {
-    return server_url+'/get_img/'+ img;
+const imageSrc = (plan) => {
+    // console.log(plan.plan_id);
+    return server_url+ '/get_img/' + plan.plan_id;
 }
 
 const onImgError = (event) => {
@@ -66,7 +67,7 @@ const displayedPlans = computed(() => {
                     </div>
                     <div class="p-img-gradient"></div>
                     <img class="p-img-src" 
-                    :src="imageSrc(plan.img)"
+                    :src="imageSrc(plan)"
                     @error="onImgError"
                     />
                 </div>

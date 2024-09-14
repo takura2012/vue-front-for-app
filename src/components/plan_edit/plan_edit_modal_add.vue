@@ -44,7 +44,12 @@ const plan_add = async (plan_id, workout_id) => {
                     }
                 });
 
-                response = await axios.get(server_url+'/get_plan/'+plan_id);
+                response = await axios.get(server_url+'/get_plan/'+plan_id, {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 if (response.data.status != 'fail') {
                     CurrentPlan.value = response.data;
                     // console.log(CurrentPlan);

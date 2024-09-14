@@ -3,7 +3,7 @@ import { ref, onMounted, inject, defineProps, computed } from 'vue';
 import axios from 'axios';
 
 const server_url = localStorage.getItem('server_url');
-
+const token = localStorage.getItem('token') ;
 const props = defineProps({
   plan_id: {
     type: String,
@@ -69,11 +69,18 @@ const DelClick = async (index, PT_id) => {
                     }
                 );
             status = response.data.status;
-
-            response = await axios.get(server_url+'/get_plan/'+CurrentPlan.value.plan_id);
+            if (status!='OK') {
+                console.log('del_status: ', status);
+                return {}
+            }
+            response = await axios.get(server_url+'/get_plan/'+CurrentPlan.value.plan_id, {
+                headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': `Bearer ${token}`
+                    }
+            });
             if (response.data.status != 'fail') {
                 CurrentPlan.value = response.data;
-                // console.log(CurrentPlan);
             } else {
                 console.log(response.data.status);
             }
@@ -87,10 +94,15 @@ const DelClick = async (index, PT_id) => {
 }
 
 const fetchWorkoutsInPlan = async (plan_id) => {
-    // console.log('fetch');
-    const response = await axios.get(server_url+`/get_plan/${plan_id.value}`);
+    const url = server_url+`/get_plan/${plan_id.value}`;
+    const response = await axios.get(url, {
+        headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`
+      }
+    });
     CurrentPlan.value = response.data;
-    // console.log('Data:', CurrentPlan.value);
+
 };
 
 onMounted(() => {
