@@ -10,7 +10,7 @@ const props = defineProps({
     required: true
   }
 });
-// console.log('PLAN-EDIT-MIDDLE=', props.plan_id);
+
 const plan_id = ref(props.plan_id);
 
 const CurrentPlan = inject('CurrentPlan');
@@ -92,22 +92,6 @@ const DelClick = async (index, PT_id) => {
     console.log('Status:', status);
     
 }
-
-const fetchWorkoutsInPlan = async (plan_id) => {
-    const url = server_url+`/get_plan/${plan_id.value}`;
-    const response = await axios.get(url, {
-        headers: {
-        'Content-Type': 'multipart/form-data',
-        'Authorization': `Bearer ${token}`
-      }
-    });
-    CurrentPlan.value = response.data;
-
-};
-
-onMounted(() => {
-    fetchWorkoutsInPlan(plan_id);
-});
 
 </script>
 

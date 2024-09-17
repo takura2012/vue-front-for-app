@@ -6,7 +6,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 
-const server_url = 'http://192.168.1.6:5000/api';
+const server_url = 'http://192.168.0.102:5000/api';
 localStorage.setItem('server_url', server_url);
 
 createApp(App)

@@ -1,5 +1,41 @@
 
 <script setup>
+import axios from 'axios';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const new_plan_name = ref('');
+const token = localStorage.getItem('token');
+const server_url = localStorage.getItem('server_url');
+
+const confirm = async () => {
+    let status = 'before';
+    console.log(new_plan_name.value);
+    const url = server_url+'/plan_new';
+    const new_name = new_plan_name.value;
+    try {
+        const res = await axios.post(url, new URLSearchParams({
+                        new_name
+                        }),{
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'Authorization': `Bearer ${token}`
+                            }
+                        });
+        
+        status = res.data.status;               
+        if (status == 'OK') {
+            router.push('/plan_edit/'+res.data.id);
+            // console.log('status: OK', 'ID=', res.data.id)
+        } else {
+            console.log('status:', status)
+        } 
+    } catch (error) {
+        console.error('Catched error:', error)
+    } 
+};
 
 </script>
 
@@ -27,8 +63,11 @@
        <div class="p-new-modal">
            <p class="text-24">Name your new plan</p>
            <p class="text-14">(3-20 letters)</p>
-           <input type="text" class="p-modal-input" placeholder="type plan name here">
-           <label for="pluscheck" class="button-modal-confirm">Confirm</label>
+           <input v-model="new_plan_name" type="text" class="p-modal-input" placeholder="type plan name here">
+           <label for="pluscheck" class="button-modal-confirm"
+           @click="confirm()">
+                Confirm
+            </label>
            <label for="pluscheck" class="button-modal-close">
                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>

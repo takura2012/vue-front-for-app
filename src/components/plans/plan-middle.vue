@@ -56,7 +56,7 @@ const displayedPlans = computed(() => {
 <template>
     <div class="p-content">
         <div v-for="plan, i in displayedPlans" :key="plan.plan_id" class="plan-item">
-            <router-link :to="{name: 'PlanEdit', params: {plan_id: plan.plan_id}}" class="link-nodecoration">
+            <router-link :to="{name: 'PlanEdit', params: {plan_id: plan.plan_id}}" class="link-nodecoration r-link">
                 <div class="p-img">
                     <div class="p-texts">
                         <div class="p-name text-24 utc-orange">{{ plan.plan_local_name }}</div>

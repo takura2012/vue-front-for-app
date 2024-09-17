@@ -1,8 +1,19 @@
 <script setup>
 
-import { inject, computed, defineProps, ref, watchEffect} from 'vue';
+import { inject, computed, ref, watchEffect} from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+
+const props = defineProps({
+  plan_id: {
+    type: String,
+    required: true
+  }
+});
+
+const plan_id = ref(props.plan_id);
 const backgroundStyle = ref({});
 // inject план из родителя
 const CurrentPlan = inject('CurrentPlan');
@@ -104,12 +115,33 @@ const handleFileChange = (event) => {
   }
 };
 
+
+const delete_plan = async () => {
+  console.log('delete:', plan_id.value);
+  const server_url = localStorage.getItem('server_url');
+  const url = server_url+'/plan_delete';
+  try {
+    const res = await axios.post(url, {id:plan_id.value},{
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (res.data.status == 'OK') {
+      router.push('/plans');
+    } else {
+      console.log('status:', res.data.status)
+    }
+  } catch (error) {
+    console.log('Catched error:', error);
+  }
+}
+
 </script>
 
 
 
 <template>
-    <div v-if="CurrentPlan && CurrentPlan.plan_name" class="vp-top-name" :style="backgroundStyle">
+    <div v-if="CurrentPlan" class="vp-top-name" :style="backgroundStyle">
         <div class="vp-name">
             <label for="fud" class="utils-block-link shadowed-text">
                 {{CurrentPlan.plan_name}}
@@ -128,12 +160,12 @@ const handleFileChange = (event) => {
                     <label for="fud" @click="renameConfirm()" class="button-modal-confirm">Confirm</label>
                     
                 <div class="modal-rename-footer text-14">
-                    <button class="button-modal-delete">Delete</button>
+                    <button class="button-modal-delete" @click="delete_plan()">Delete</button>
                     Удаленный план восстановить невозможно
                 </div>
             </div>
         </div>
-        <div v-if="CurrentPlan && CurrentPlan.workouts_count" class="vp-count">{{CurrentPlan.workouts_count}} day workouts plan</div>
+        <div v-if="CurrentPlan && CurrentPlan.workouts_count" class="vp-count shadowed-text">{{CurrentPlan.workouts_count}} day workouts plan</div>
     </div>
 </template>
 

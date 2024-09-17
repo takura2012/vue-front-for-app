@@ -14,9 +14,12 @@ const props = defineProps({
   }
 });
 
+const plan_id = ref(props.plan_id);
 const CurrentPlan = ref(null);
 const UserWorkouts = ref([]);
 const CommonWorkouts = ref([]);
+const server_url = localStorage.getItem('server_url')
+const token = localStorage.getItem('token') ;
 
 provide('CurrentPlan', CurrentPlan);
 provide('UserWorkouts', UserWorkouts)
@@ -35,10 +38,29 @@ const fetchAllWorkouts = async () => {
   
 }
 
+const fetchWorkoutsInPlan = async (plan_id) => {
+    const url = server_url+`/get_plan/${plan_id.value}`;
+    const response = await axios.get(url, {
+        headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    CurrentPlan.value = response.data;
+
+};
+
+// onMounted(() => {
+//     fetchWorkoutsInPlan(plan_id);
+// });
+
+
 onMounted(() => {
   // console.log('mounted')
+    fetchWorkoutsInPlan(plan_id);
     fetchAllWorkouts();
 });
+
 
 
 </script>

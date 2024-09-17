@@ -43,7 +43,10 @@ const plan_add = async (plan_id, workout_id) => {
                         'Authorization': `Bearer ${token}`
                     }
                 });
-
+                if (response.data.status != 'OK') {
+                    console.log('Add status:', response.data.status)
+                    return {}
+                }
                 response = await axios.get(server_url+'/get_plan/'+plan_id, {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
